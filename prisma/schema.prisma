@@ -6,3 +6,34 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  email       String    @unique
+  password    String
+  first_name  String
+  last_name   String
+  photo       Photo[]
+  
+}
+
+
+model Album {
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  title       String
+  userId      Int       @unique
+  photo       Photo[]
+
+}
+
+
+model Photo {
+  title       String
+  url         String
+  albumId     Int       @db.UnsignedInt
+  userId      Int       @db.UnsignedInt
+  user        User      @relation(fields: [userId], references: [id])
+  album       Album     @relation(fields: [albumId], references: [id])
+
+  @@id([userId, albumId])
+}
