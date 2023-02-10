@@ -21,19 +21,19 @@ model User {
 model Album {
   id          Int       @id @default(autoincrement()) @db.UnsignedInt
   title       String
-  userId      Int       @unique
-  photo       Photo[]
+  photos      Photo[]
 
 }
 
 
 model Photo {
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
   title       String
   url         String
+  album       Album     @relation(fields: [albumId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
   albumId     Int       @db.UnsignedInt
   userId      Int       @db.UnsignedInt
-  user        User      @relation(fields: [userId], references: [id])
-  album       Album     @relation(fields: [albumId], references: [id])
 
-  @@id([userId, albumId])
+
 }
