@@ -5,32 +5,32 @@
 
 import express from 'express'
 import { body } from 'express-validator'
-import { index, show, store, update, destroy } from '../controllers/_controller'
+import { index, show, store, update, destroy } from '../controllers/photo_controller'
 const router = express.Router()
 
 /**
  * GET /resource
  */
-router.get('/photos', index)
+router.get('/', index)
 
 /**
  * GET /resource/:resourceId
  */
-router.get('/photos/:photoId', show)
+router.get('/:photoId', show)
 
 /**
  * POST /resource
  */
-router.post('/photos', [], store)
+router.post('/', [], store)
 
 /**
  * PATCH /resource/:resourceId
  */
-router.patch('/photos/:photoId', [], update)
+router.patch('/:photoId', [], update)
 
 /**
  * DELETE /resource/:resourceId
  */
-router.delete('/photos:photoId', destroy)
+//router.delete('/photos:photoId', destroy)
 
 export default router

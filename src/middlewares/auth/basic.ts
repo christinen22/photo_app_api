@@ -1,7 +1,7 @@
 /**
  * HTTP Basic Authentication
  */
-
+import bcrypt from 'bcrypt'
 import Debug from 'debug'
 import { Request, Response, NextFunction } from 'express'
 import { getUserByEmail } from '../../services/user_services'
@@ -43,6 +43,17 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
             data: "Authorization required"
         })
     }
+
+    const result = await bcrypt.compare(password, user.password)
+    if (!result) {
+        return res.status(400).send({
+            status: "fail",
+            data: "Authorization required"
+        })
+    }
+
+    //Attach user to request
+    req.user = user
 
 
     next()

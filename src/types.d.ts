@@ -11,12 +11,11 @@ export type CreateUserData = {
 
 export type CreateAlbumData = {
 	title: string,
-	userId: number
+	userId: number,
+	photos: any
 }
 
-export type createPhotoData = {
+export type CreatePhotoData = {
 	title: string,
-	url: string,
-	albumId: number,
-	userId: number
+	url: string
 }

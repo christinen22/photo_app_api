@@ -33,9 +33,8 @@ model Photo {
   id          Int       @id @default(autoincrement()) @db.UnsignedInt
   title       String
   url         String
-  album       Album     @relation(fields: [albumId], references: [id])
+  album       Album[]
   user        User      @relation(fields: [userId], references: [id])
-  albumId     Int       @db.UnsignedInt
   userId      Int       @db.UnsignedInt
 
 
