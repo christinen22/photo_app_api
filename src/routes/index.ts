@@ -2,11 +2,13 @@ import express from "express"
 import { body } from 'express-validator'
 import resource from './_router'
 import { register } from '../controllers/register_controller'
+import { createUserRules } from "../validations/user_rules"
 // instantiate a new router
 const router = express.Router()
 
 /**
  * GET /
+ 
  */
 router.get('/', (req, res) => {
 	res.send({
@@ -14,15 +16,6 @@ router.get('/', (req, res) => {
 	})
 })
  
-router.post('/register', [
-	//validation for rules
-
-	body('first_name').isString().bail().isLength({ min: 2}),
-	body('last_name').isString().bail().isLength({ min: 2}),
-	body('email').isEmail(),
-	body('password').isString()
-
-
-], register)
+router.post('/register', createUserRules, register)
 
 export default router

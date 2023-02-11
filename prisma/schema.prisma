@@ -14,6 +14,7 @@ model User {
   first_name  String
   last_name   String
   photos      Photo[]
+  album       Album[]    
   
 }
 
@@ -22,6 +23,8 @@ model Album {
   id          Int       @id @default(autoincrement()) @db.UnsignedInt
   title       String
   photos      Photo[]
+  userId      Int       @db.UnsignedInt
+  user        User      @relation(fields: [userId], references: [id])
 
 }
 

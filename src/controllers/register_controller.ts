@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
 import prisma from '../prisma'
+import { createUser, getUserByEmail } from '../services/user_services'
 
 /**
  * Register a new user
@@ -26,6 +27,9 @@ export const register = async (req: Request, res: Response) => {
     const hashedPassword = 
         await bcrypt.hash(validatedData.password, Number(process.env.SALT_ROUNDS) || 10)
 
+        validatedData.password = hashedPassword
+
+        //Store user in db
         try {
             const user = await prisma.user.create({
                 data: {
@@ -42,8 +46,6 @@ export const register = async (req: Request, res: Response) => {
         } catch (err) {
             return res.status(500).send({ "status": "error", message: "Could not create user"})
         }
-
-    //Store user
 
 
 }
