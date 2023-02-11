@@ -11,4 +11,7 @@ const router = express.Router()
 
 router.get('/', getUser)
 
+//Link album to user
+router.post('/:userId/albums', addAlbum)
+
 export default router

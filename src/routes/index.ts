@@ -21,12 +21,16 @@ router.get('/', (req, res) => {
 	})
 })
 
+//Get authorized user
 router.use('/user', basic, user)
 
+//Create user
 router.post('/register', createUserRules, register)
 
+//Create album
 router.post('/albums', albums) 
 
+//Create photo
 router.post('/photos', photos)
 
 

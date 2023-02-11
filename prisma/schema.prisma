@@ -35,6 +35,7 @@ model Photo {
   url         String
   album       Album[]
   user        User      @relation(fields: [userId], references: [id])
+  albumId     Int       @db.UnsignedInt
   userId      Int       @db.UnsignedInt
 
 
