@@ -49,3 +49,14 @@ export const register = async (req: Request, res: Response) => {
 
 
 }
+
+/**
+ * Get authenticated user
+ */
+
+export const getUser = async (req: Request, res: Response) => {
+    res.send({
+        status: "success",
+        data: null
+    })
+}
