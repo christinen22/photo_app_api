@@ -23,11 +23,10 @@ export const getUserByEmail = async (email:string) => {
  * Create a user
  *
  * @param data User Details
- 
+*/ 
 
 export const createUser = async (data: CreateUserData) => {
     return await prisma.user.create({
-        data: data,
+        data: data
     })
 }
-*/

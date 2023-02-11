@@ -3,7 +3,7 @@
  */
 
 import express from "express"
-import { getUser } from "../controllers/user_controller";
+import { getUser, addAlbum } from '../controllers/user_controller'
 
 const router = express.Router()
 

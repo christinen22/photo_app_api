@@ -4,7 +4,7 @@
 
 import express from 'express'
 import {body} from 'express-validator'
-import { index, show, store } from '../controllers/album_controller'
+import { index, show, store, addPhoto } from '../controllers/album_controller'
 const router = express.Router()
 
 
@@ -22,7 +22,10 @@ router.get('/albums/:almbumId', show)
 /**
  * POST /resource
  */
-router.post('/albums', store)
+router.post('/albums', [
+    body('title').isString().bail().isLength({ min: 3 }),
+
+], store)
 
 /**
  * PATCH /resource/:resourceId
