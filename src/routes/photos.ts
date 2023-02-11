@@ -5,28 +5,28 @@
 
 import express from 'express'
 import { body } from 'express-validator'
-import { index, show, store, update, destroy } from '../controllers/photo_controller'
+import { index } from '../controllers/photo_controller'
 const router = express.Router()
 
 /**
  * GET /resource
  */
-router.get('/', index)
+router.get('/photos', index)
 
 /**
  * GET /resource/:resourceId
  */
-router.get('/:photoId', show)
+//router.get('/photos/:photoId', show)
 
 /**
  * POST /resource
  */
-router.post('/', [], store)
+//router.post('/photos', [], store)
 
 /**
  * PATCH /resource/:resourceId
  */
-router.patch('/:photoId', [], update)
+//router.patch('/photos/:photoId', [], update)
 
 /**
  * DELETE /resource/:resourceId
