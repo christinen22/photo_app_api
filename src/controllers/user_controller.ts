@@ -65,6 +65,14 @@ export const getUser = async (req: Request, res: Response) => {
 }
 
 /**
+ * Update user profile
+ */
+
+export const updateUser = async (req: Request, res: Response) => {
+    
+}
+
+/**
  * Link a album to a user
  */
 export const addAlbum = async (req: Request, res: Response) => {
