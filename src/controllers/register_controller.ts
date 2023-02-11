@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
 import prisma from '../prisma'
-import { createUser, getUserByEmail } from '../services/user_services'
+import {  getUserByEmail } from '../services/user_services'
 
 /**
  * Register a new user

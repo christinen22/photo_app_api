@@ -8,7 +8,13 @@ import { getUserByEmail } from '../services/user_services'
 export const createUserRules = [
     body('first_name').isString().bail().isLength({ min: 2}),
 	body('last_name').isString().bail().isLength({ min: 2}),
-	body('email').isEmail(),
+	body('email').isEmail().custom(async value => {
+		const user = await getUserByEmail(value)
+
+		if(user) {
+			return Promise.reject("User with current email already exists")
+		}
+	}),
 	body('password').isString()
 
 ]
