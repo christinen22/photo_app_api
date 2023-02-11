@@ -4,10 +4,11 @@
 
 import Debug from 'debug'
 import { Request, Response, NextFunction } from 'express'
+import { getUserByEmail } from '../../services/user_services'
 
 const debug = Debug('photo_app_api:basic')
 
-export const basic = (req: Request, res: Response, next: NextFunction) => {
+export const basic = async (req: Request, res: Response, next: NextFunction) => {
     
     //Check Authorization header
     if (!req.headers.authorization) {
@@ -33,7 +34,15 @@ export const basic = (req: Request, res: Response, next: NextFunction) => {
     //Split decodedPayload
     const [email, password] = decodedPayload.split(':')
 
+    //Get user from db
+    const user = await getUserByEmail(email)
+    if (!user) {
 
+        return res.status(401).send({
+            status: "fail",
+            data: "Authorization required"
+        })
+    }
 
 
     next()
