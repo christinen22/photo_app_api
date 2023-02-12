@@ -32,8 +32,9 @@ export const store = async (req: Request, res: Response) => {
         const photo = await createPhoto({
             title: req.body.title,
             url: req.body.url,
+            albumId: req.body.albumId,
             userId: req.body.userId,
-            albumId: req.body.albumId
+            
             
         })
 
