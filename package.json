@@ -1,5 +1,5 @@
 {
-  "name": "06-prisma-boilerplate",
+  "name": "photo_app_api",
   "version": "1.0.0",
   "description": "",
   "main": "build/server.js",
@@ -7,7 +7,7 @@
     "build": "env-cmd --silent bash scripts/build.sh",
     "build-app": "tsc",
     "migrate": "npx prisma migrate deploy",
-    "dev": "cross-env DEBUG=prisma-boilerplate:* nodemon server.ts",
+    "dev": "cross-env DEBUG=photo_app_api:* nodemon server.ts",
     "start": "node build/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,7 +37,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.14.3",
-    "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0"
   }
 }

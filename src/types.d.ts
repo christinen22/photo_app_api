@@ -17,6 +17,7 @@ export type CreateAlbumData = {
 export type CreatePhotoData = {
 	title: string,
 	url: string,
-	albumId: number,
-	userId: number
+	comment: string,
+	userId: number,
+	albumId: number
 }
