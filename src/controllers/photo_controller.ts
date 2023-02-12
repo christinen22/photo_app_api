@@ -8,6 +8,7 @@ import { validationResult } from 'express-validator'
 import { createPhoto } from '../services/photo_services'
 import prisma from '../prisma'
 
+
 const debug = Debug('photo_app_api:photo_controller')
 
 //Get all photos
@@ -74,11 +75,9 @@ export const store = async (req: Request, res: Response) => {
         const photo = await createPhoto({
             title: req.body.title,
             url: req.body.url,
-            comment: req.body.comment,
-            userId: req.body.userId,
-            albumId: req.body.albumId
-        
+            comment: req.body.comment
         })
+       
 
         res.send({
             status: "success",

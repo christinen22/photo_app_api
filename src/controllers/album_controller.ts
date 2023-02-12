@@ -60,8 +60,7 @@ export const store = async (req: Request, res: Response) => {
         })
     } try {
         const album = await createAlbum({
-            title: req.body.title,
-            userId: req.body.userId
+            title: req.body.title
             
         })
 

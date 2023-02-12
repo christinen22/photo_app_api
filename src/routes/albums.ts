@@ -28,6 +28,12 @@ router.post('/albums', [
 ], store)
 
 /**
+ * POST
+ */
+
+router.post('/albums/:albumId/photos', addPhoto)
+
+/**
  * PATCH /resource/:resourceId
  */
 //router.patch('/albums/:albumId', [], update)
