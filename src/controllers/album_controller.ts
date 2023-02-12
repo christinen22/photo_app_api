@@ -5,7 +5,7 @@
 import Debug from 'debug'
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
-import { createAlbum, getAlbum } from '../services/album_services'
+import { createAlbum, getAlbum, getAlbums } from '../services/album_services'
 import prisma from '../prisma'
 
 //Create a new debug instance
@@ -15,7 +15,7 @@ const debug = Debug('photo_app_api:album_controller')
 
 export const index = async (req: Request, res: Response) => {
     try {
-        const album = await getAlbum()
+        const album = await getAlbums()
 
         res.send({
             status: "success",

@@ -5,7 +5,7 @@
 
 import express from 'express'
 import { body } from 'express-validator'
-import { index } from '../controllers/photo_controller'
+import { index, store } from '../controllers/photo_controller'
 const router = express.Router()
 
 /**
@@ -21,7 +21,10 @@ router.get('/photos', index)
 /**
  * POST /resource
  */
-//router.post('/photos', [], store)
+router.post('/photos', [
+    body('title').isString().bail().isLength({ min: 3 }),
+    body('url').isString().bail().notEmpty()
+], store)
 
 /**
  * PATCH /resource/:resourceId
