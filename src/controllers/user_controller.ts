@@ -91,3 +91,30 @@ export const addAlbum = async (req: Request, res: Response) => {
 		res.status(500).send({ message: "Something went wrong" })
 	}
 }
+
+/**
+ * Link a photo to an users album
+ */
+export const addPhoto = async (req: Request, res: Response) => {
+	try {
+		const result = await prisma.user.update({
+			where: {
+				id: Number(req.params.userId),
+			},
+			data: {
+				photos: {
+					connect: {
+						id: req.body.photoId,
+					}
+				}
+			},
+			include: {
+				photos: true
+			}
+		})
+		res.status(201).send(result)
+	} catch (err) {
+		//debug("Error thrown when adding photo %o to an album %o: %o", req.body.photoId, req.params.albumId, err)
+		res.status(500).send({ message: "Something went wrong" })
+	}
+}

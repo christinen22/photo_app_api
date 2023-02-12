@@ -3,7 +3,8 @@
  */
 
 import express from "express"
-import { getUser, addAlbum } from '../controllers/user_controller'
+//import { addPhoto } from "../controllers/album_controller"
+import { getUser, addAlbum, addPhoto } from '../controllers/user_controller'
 
 const router = express.Router()
 
@@ -13,5 +14,9 @@ router.get('/', getUser)
 
 //Link album to user
 router.post('/:userId/albums', addAlbum)
+
+
+//Link photo to user
+router.post('/:userId/photos', addPhoto)
 
 export default router

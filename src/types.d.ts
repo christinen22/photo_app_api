@@ -13,6 +13,7 @@ export type CreateAlbumData = {
 	title: string
 }
 
+
 export type CreatePhotoData = {
 	title: string,
 	url: string,
