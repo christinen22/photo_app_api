@@ -4,38 +4,38 @@
 
 import express from 'express'
 import {body} from 'express-validator'
-import { index, show, store } from '../controllers/album_controller'
+import { index, show, store, addPhoto } from '../controllers/album_controller'
 const router = express.Router()
 
 
 
 /**
- * GET /resource
+ * GET all albums
  */
-router.get('/', index)
+router.get('/albums', index)
 
 /**
- * GET /resource/:resourceId
+ * GET single album incl photos
  */
-router.get('/:almbumId', show)
+router.get('/albums/:almbumId', show)
 
 /**
  * POST /resource
  */
-router.post('/', [
+router.post('/albums', [
     body('title').isString().bail().isLength({ min: 3 }),
 
 ], store)
 
 /**
- * POST
+ * POST photo to album
  */
-//Link photo to album
 
-//router.post('/:albumId/photos', addPhoto)
+
+router.post('/albums/:albumId/photos', addPhoto)
 
 /**
- * PATCH /resource/:resourceId
+ * PATCH update album
  */
 //router.patch('/albums/:albumId', [], update)
 

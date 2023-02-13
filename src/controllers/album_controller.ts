@@ -5,7 +5,6 @@
 import Debug from 'debug'
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
-import { createAlbum, getAlbum, getAlbums } from '../services/album_services'
 import prisma from '../prisma'
 
 //Create a new debug instance
@@ -15,7 +14,7 @@ const debug = Debug('photo_app_api:album_controller')
 
 export const index = async (req: Request, res: Response) => {
     try {
-        const album = await getAlbums()
+        const album = await prisma.album.findMany()
 
         res.send({
             status: "success",
@@ -32,7 +31,11 @@ export const show = async (req: Request, res: Response) => {
     const albumId = Number(req.params.albumId)
 
     try {
-        const album = await getAlbum(albumId)
+        const album = await prisma.album.findUniqueOrThrow({
+            where: {
+                id: albumId
+            }
+        })
 
         res.send({
             status: "success",
@@ -59,8 +62,10 @@ export const store = async (req: Request, res: Response) => {
             data: validationsErrors.array()
         })
     } try {
-        const album = await createAlbum({
-            title: req.body.title
+        const album = await prisma.album.create({
+            data: {
+                title: req.body.title
+            }
             
         })
 
@@ -77,3 +82,29 @@ export const store = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * Link a photo to an users album
+ */
+export const addPhoto = async (req: Request, res: Response) => {
+	try {
+		const result = await prisma.album.update({
+			where: {
+				id: Number(req.params.albumId),
+			},
+			data: {
+				photos: {
+					connect: {
+						id: req.body.photoId,
+					}
+				}
+			},
+			include: {
+				photos: true
+			}
+		})
+		res.status(201).send(result)
+	} catch (err) {
+		//debug("Error thrown when adding photo %o to an album %o: %o", req.body.photoId, req.params.albumId, err)
+		res.status(500).send({ message: "Something went wrong" })
+	}
+}

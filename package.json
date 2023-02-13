@@ -8,6 +8,7 @@
     "build-app": "tsc",
     "migrate": "npx prisma migrate deploy",
     "dev": "cross-env DEBUG=photo_app_api:* nodemon server.ts",
+    "debug": "cross-env DEBUG=photo_app_api:* nodemon --inspect server.ts",
     "start": "node build/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

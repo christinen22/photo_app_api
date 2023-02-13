@@ -7,7 +7,6 @@ import resource from './_router'
 import { register } from '../controllers/user_controller'
 import { basic } from "../middlewares/auth/basic"
 import { createUserRules } from "../validations/user_rules"
-import { createAlbum } from "../services/album_services"
 // instantiate a new router
 const router = express.Router()
 
