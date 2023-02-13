@@ -9,14 +9,15 @@ import { index, show, store } from '../controllers/photo_controller'
 const router = express.Router()
 
 /**
- * GET /resource
+ * GET all photos
  */
-router.get('/', index)
+router.get('/photos', index)
 
 /**
- * GET /resource/:resourceId
+ * GET a single photo
+ *
  */
-router.get('/:photoId', show)
+router.get('/photos/:photoId', show)
 
 /**
  * POST /resource
@@ -26,7 +27,7 @@ router.post('/photos', [
 ], store)
 
 /**
- * PATCH /resource/:resourceId
+ * PATCH update photo
  */
 //router.patch('/photos/:photoId', [], update)
 
