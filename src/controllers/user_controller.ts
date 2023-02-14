@@ -2,11 +2,14 @@
  * User Controller
  */
 
+import Debug from 'debug'
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
 import prisma from '../prisma'
 import {  getUserByEmail, createUser } from '../services/user_services'
+
+const debug = Debug('photo_app_api:user_controller')
 
 /**
  * Register a new user
@@ -20,8 +23,8 @@ export const register = async (req: Request, res: Response) => {
 		})
 	}
 
-    //Get only the validated data
-    const validatedData = matchedData(req)
+   const validatedData = matchedData(req) //Get only the validated data
+    
 
     //Calculate hash + salt
     const hashedPassword = 
@@ -53,13 +56,18 @@ export const register = async (req: Request, res: Response) => {
  */
 
 export const getUser = async (req: Request, res: Response) => {
+
+    const user = await getUserByEmail (req.user!.email)
+
+    debug("who dis: %o", req.user)
+
     res.send({
         status: "success",
         data: {
-            id: req.body.id,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email
+            id: user?.id,
+            first_name: user?.first_name,
+            last_name: user?.last_name,
+            email: user?.email
         }
     })
 }

@@ -4,8 +4,14 @@
 
 import Debug from 'debug'
 import { Request, Response } from 'express'
-import { validationResult } from 'express-validator'
+import { matchedData, validationResult } from 'express-validator'
+import { basic } from '../middlewares/auth/basic'
 import prisma from '../prisma'
+import { createAlbum, getAlbum, getAlbums } from '../services/album_services'
+import { getUserByEmail } from '../services/user_services'
+import { getUser } from './user_controller'
+import { addAlbum } from './user_controller'
+
 
 //Create a new debug instance
 const debug = Debug('photo_app_api:album_controller')
@@ -14,7 +20,7 @@ const debug = Debug('photo_app_api:album_controller')
 
 export const index = async (req: Request, res: Response) => {
     try {
-        const album = await prisma.album.findMany()
+        const album = await getAlbums()
 
         res.send({
             status: "success",
@@ -31,11 +37,7 @@ export const show = async (req: Request, res: Response) => {
     const albumId = Number(req.params.albumId)
 
     try {
-        const album = await prisma.album.findUniqueOrThrow({
-            where: {
-                id: albumId
-            }
-        })
+        const album = await getAlbum(albumId)
 
         res.send({
             status: "success",
@@ -50,6 +52,7 @@ export const show = async (req: Request, res: Response) => {
 }
 
 
+
 //Create an album
 
 export const store = async (req: Request, res: Response) => {
@@ -59,22 +62,28 @@ export const store = async (req: Request, res: Response) => {
     if(!validationsErrors.isEmpty()) {
         return res.status(400).send({
             status: "fail",
-            data: validationsErrors.array()
+            data: validationsErrors.array(),
         })
-    } try {
-        const album = await prisma.album.create({
-            data: {
-                title: req.body.title
-            }
-            
+    }
+
+
+
+    try {
+        const album = await createAlbum({
+        title: req.body.title,
+        user_id: req.user!.id
         })
 
         res.send({
+            
+
             status: "success",
             data: album
+            
         })
+
     } catch (err) {
-        debug("Error thrown when creating an album %o: %o", req.body.err)
+        debug("Error when posting album, title is: %o, user_id is %o", req.body.title, req.user!.id)
         res.status(500).send({
             status: "error",
             message: "Something went wrong"
