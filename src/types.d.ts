@@ -2,6 +2,8 @@
  * Type definitions
  */
 
+
+
 export type CreateUserData = {
     first_name: string,
     last_name: string,
@@ -10,7 +12,9 @@ export type CreateUserData = {
 }
 
 export type CreateAlbumData = {
-	title: string
+	title: string,
+	user_id: number
+	
 }
 
 

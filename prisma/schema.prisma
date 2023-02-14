@@ -23,9 +23,8 @@ model Album {
   id          Int       @id @default(autoincrement()) @db.UnsignedInt
   title       String
   photos      Photo[]
-  photo_id    Int?       @db.UnsignedInt
   user_id     Int        @db.UnsignedInt
-  user        User      @relation(fields: [user_id], references: [id])
+  user        User       @relation(fields: [user_id], references: [id])
 
 }
 

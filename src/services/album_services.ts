@@ -3,6 +3,7 @@
  */
 
 import prisma from '../prisma'
+import { basic } from '../middlewares/auth/basic'
 import { CreateAlbumData } from '../types'
 
 
@@ -29,6 +30,13 @@ export const getAlbum = async (albumId: number) => {
 
 export const createAlbum = async (data: CreateAlbumData) => {
     return await prisma.album.create({
-        data: data
+        data: {
+            title: data.title,
+            user: {
+                connect: {
+                    id: data.user_id
+                }
+            }
+        }
     })
 }

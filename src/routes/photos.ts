@@ -11,18 +11,18 @@ const router = express.Router()
 /**
  * GET all photos
  */
-router.get('/photos', index)
+router.get('/', index)
 
 /**
  * GET a single photo
  *
  */
-router.get('/photos/:photoId', show)
+router.get('/:photoId', show)
 
 /**
  * POST /resource
  */
-router.post('/photos', [
+router.post('/', [
     body('title').isString().bail().isLength({ min: 3 }),
 ], store)
 

@@ -7,6 +7,7 @@ import resource from './_router'
 import { register } from '../controllers/user_controller'
 import { basic } from "../middlewares/auth/basic"
 import { createUserRules } from "../validations/user_rules"
+import { createAlbum } from "../services/album_services"
 // instantiate a new router
 const router = express.Router()
 
@@ -26,11 +27,17 @@ router.use('/user', basic, user)
 //Create user
 router.post('/register', createUserRules, register)
 
-//Create album
-router.post('/albums', albums) 
 
-//Create photo
-router.post('/photos', photos)
+
+router.use('/albums', basic, albums)
+
+router.use('/photos', basic, photos)
+
+router.use('/user', basic, user)
+
+
+
+
 
 
 

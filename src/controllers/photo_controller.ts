@@ -9,6 +9,7 @@ import { createPhoto } from '../services/photo_services'
 import prisma from '../prisma'
 
 
+
 const debug = Debug('photo_app_api:photo_controller')
 
 //Get all photos
