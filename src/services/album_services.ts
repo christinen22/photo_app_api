@@ -6,9 +6,14 @@ import prisma from '../prisma'
 import { basic } from '../middlewares/auth/basic'
 import { CreateAlbumData } from '../types'
 import { debug } from 'console'
+import { format } from 'path'
 
 
-//Get all albums
+/**
+ * GET all albums
+ * @param userId 
+ * @returns 
+ */
 export const getAlbums = async (userId: number) => {
     return await prisma.album.findMany(
         {
@@ -23,28 +28,33 @@ export const getAlbums = async (userId: number) => {
 /**
  * Get a single album
  *
- * @param albumId 
+ * @param albumId
  */
-export const getAlbum = async (albumId: number, userId: number) => {
+export const getAlbum = async (albumId: number) => {
     
     return await prisma.album.findUniqueOrThrow({
 
+
         where: {
-            id: albumId,
-            user_id: userId
+            id: albumId
        
         }, 
         select: {
             id: true,
             title: true,
             photos: true,
+            user_id: true,
             
-        }, 
+        }
     })
 }
 
 
-
+/**
+ * POST album
+ * @param data 
+ * @returns 
+ */
 
 export const createAlbum = async (data: CreateAlbumData) => {
     return await prisma.album.create({

@@ -13,12 +13,12 @@ const router = express.Router()
 /**
  * GET all albums
  */
-router.get('/', index)
+router.get('/', basic, index)
 
 /**
  * GET single album incl photos
  */
-router.get('/:albumId', show)
+router.get('/:albumId', basic, show)
 
 /**
  * POST /resource

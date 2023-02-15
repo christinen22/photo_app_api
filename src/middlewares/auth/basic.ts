@@ -58,7 +58,7 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
 
     //Attach user to request
     req.user = user
-    debug("User is %o", user)
+    //debug("User is %o", user)
 
 
     next()
