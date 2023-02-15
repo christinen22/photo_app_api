@@ -19,15 +19,17 @@ const debug = Debug('photo_app_api:album_controller')
 //Get all albums
 
 export const index = async (req: Request, res: Response) => {
+    const userId = Number(req.user!.id)
+
     try {
-        const album = await getAlbums()
+        const album = await getAlbums(userId)
 
         res.send({
             status: "success",
             data: album,
         })
     } catch (err) {
-        debug("Error thrown when finding albums", err)
+        debug("Error thrown when finding albums: %o, user: %o:" )
         res.status(500).send({status: "error", message: "Something went wrong"})
     }
 }
@@ -35,16 +37,19 @@ export const index = async (req: Request, res: Response) => {
 //Get a single album
 export const show = async (req: Request, res: Response) => {
     const albumId = Number(req.params.albumId)
+    const userId = Number(req.user!.id)
 
     try {
-        const album = await getAlbum(albumId)
+        
+        debug("albumid %o:", albumId)
+        const album = await getAlbum(albumId, userId)
 
         res.send({
             status: "success",
             data: album,
         })
     } catch (err) {
-        debug(err)
+        debug("Error thrown finding albumId %o with userId %o", albumId)
         res.status(404).send({
             message: "Not found",
         })
@@ -95,15 +100,18 @@ export const store = async (req: Request, res: Response) => {
  * Link a photo to an users album
  */
 export const addPhoto = async (req: Request, res: Response) => {
+ 
+
 	try {
+
 		const result = await prisma.album.update({
 			where: {
-				id: Number(req.params.albumId),
+				id: Number(req.params.albumId)
 			},
 			data: {
 				photos: {
 					connect: {
-						id: req.body.photoId,
+						id: req.body.photo_id,
 					}
 				}
 			},
@@ -113,7 +121,7 @@ export const addPhoto = async (req: Request, res: Response) => {
 		})
 		res.status(201).send(result)
 	} catch (err) {
-		//debug("Error thrown when adding photo %o to an album %o: %o", req.body.photoId, req.params.albumId, err)
+		debug("Error thrown when adding photo %o to an album %o: %o", req.body.photo_id, req.body.album_id)
 		res.status(500).send({ message: "Something went wrong" })
 	}
 }

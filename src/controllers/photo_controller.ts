@@ -40,6 +40,7 @@ export const show = async (req: Request, res: Response) => {
         const photo = await prisma.photo.findUniqueOrThrow({
             where: {
                 id: photoId
+            
             },
             include: {
                 user: true,
@@ -76,7 +77,8 @@ export const store = async (req: Request, res: Response) => {
         const photo = await createPhoto({
             title: req.body.title,
             url: req.body.url,
-            comment: req.body.comment
+            comment: req.body.comment,
+            user_id: req.user!.id
         })
        
 
@@ -85,7 +87,7 @@ export const store = async (req: Request, res: Response) => {
             data: photo
         })
     } catch (err) {
-        debug("Error thrown when creating photo %o: %o", req.body.err)
+        debug("Error thrown when creating photo %o: %o", req.body.title, req.user!.id)
         res.status(500).send({
             status: "error",
             message: "Something went wrong"
