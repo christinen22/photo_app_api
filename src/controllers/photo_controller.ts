@@ -5,64 +5,78 @@
 import { Request, Response } from 'express'
 import Debug from 'debug'
 import { validationResult } from 'express-validator'
-import { createPhoto } from '../services/photo_services'
+import { createPhoto, getPhotos, getPhoto } from '../services/photo_services'
 import prisma from '../prisma'
 
 
 
 const debug = Debug('photo_app_api:photo_controller')
 
-//Get all photos
+/**
+ * GET all photos
+ * @param req 
+ * @param res 
+ */
 
 export const index = async (req: Request, res: Response) => {
+    const userId = Number(req.user!.id)
+
     try {
-        const photos = await prisma.photo.findMany()
+        const photo = await getPhotos(userId)
 
         res.send({
             status: "success",
-            data: photos
+            data: photo,
         })
     } catch (err) {
-        debug("Error thrown when finding photos", err)
-        res.status(500).send({
-            status: "error",
-            message: "Something went wrong"
-        })
+        debug("Error thrown when finding photoss: %o, user: %o:",  )
+        res.status(500).send({status: "error", message: "Something went wrong"})
     }
 }
 
-//Get single photo
+
+
+/**
+ * GET single photo
+ * @param req 
+ * @param res 
+ */
+
 
 export const show = async (req: Request, res: Response) => {
     const photoId = Number(req.params.photoId)
-
+    
     try {
-        const photo = await prisma.photo.findUniqueOrThrow({
-            where: {
-                id: photoId
-            
-            },
-            include: {
-                user: true,
-                album: true
-            }
-        })
+        
+        const photo = await getPhoto(photoId) 
 
-        res.send({
-            status: "success",
-            data: photo
-        })
+        if(Number(photo.user_id) !== Number(req.user!.id)) {
+            res.status(403).send({
+                status: "error",
+                message: "Not your photo"
+            })
+        } else if(Number(photo.user_id) === Number(req.user!.id)) {
+            res.send({
+                status: "success",
+                data: photo
+            })
+        }
+
     } catch (err) {
-        debug("Error thrown when finding a photo with id %o: %o", req.params.photoId, err)
-        return res.status(404).send({
-            status: "error",
-            message: "Not found"
+        debug("Error thrown finding photo %o", photoId)
+        res.status(404).send({
+            message: "Not found",
         })
     }
 }
 
 
-//Create a photo
+/**
+ * POST photos
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 
 export const store = async (req: Request, res: Response) => {
     
@@ -95,9 +109,35 @@ export const store = async (req: Request, res: Response) => {
     }
 }
 
-//Update photo
+/**
+ * PATCH update photo
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
 
 export const update = async (req: Request, res: Response) => {
+    const photoId = Number(req.params.photoId)
+
+    try {
+        const photo = await prisma.photo.update({
+            where: {
+                id: photoId
+            },
+            data: {
+                title: req.body.title
+            }
+        })
+
+        return res.send(photo)
+        
+    } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Nope, didn't work"
+        })
+    }
 }
 
 //Delete photo

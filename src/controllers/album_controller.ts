@@ -16,13 +16,20 @@ import { addAlbum } from './user_controller'
 //Create a new debug instance
 const debug = Debug('photo_app_api:album_controller')
 
-//Get all albums
+/**
+ * GET all albums
+ * @param req 
+ * @param res 
+ * 
+ */
 
 export const index = async (req: Request, res: Response) => {
     const userId = Number(req.user!.id)
 
+
     try {
         const album = await getAlbums(userId)
+        
 
         res.send({
             status: "success",
@@ -34,22 +41,34 @@ export const index = async (req: Request, res: Response) => {
     }
 }
 
-//Get a single album
+/**
+ * GET single album
+ * @param req 
+ * @param res 
+ */
+
+
 export const show = async (req: Request, res: Response) => {
     const albumId = Number(req.params.albumId)
-    const userId = Number(req.user!.id)
-
+    
     try {
         
-        debug("albumid %o:", albumId)
-        const album = await getAlbum(albumId, userId)
+        const album = await getAlbum(albumId) 
 
-        res.send({
-            status: "success",
-            data: album,
-        })
+        if(Number(album.user_id) !== Number(req.user!.id)) {
+            res.status(403).send({
+                status: "error",
+                message: "Not your album"
+            })
+        } else if(Number(album.user_id) === Number(req.user!.id)) {
+            res.send({
+                status: "success",
+                data: album
+            })
+        }
+
     } catch (err) {
-        debug("Error thrown finding albumId %o with userId %o", albumId)
+        debug("Error thrown finding albumId %o", albumId)
         res.status(404).send({
             message: "Not found",
         })
@@ -58,7 +77,12 @@ export const show = async (req: Request, res: Response) => {
 
 
 
-//Create an album
+/**
+ * POST album
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 
 export const store = async (req: Request, res: Response) => {
     
