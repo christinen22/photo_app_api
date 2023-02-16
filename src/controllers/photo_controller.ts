@@ -125,9 +125,8 @@ export const update = async (req: Request, res: Response) => {
             where: {
                 id: photoId
             },
-            data: {
-                title: req.body.title
-            }
+            data: req.body
+        
         })
 
         return res.send(photo)
@@ -140,7 +139,3 @@ export const update = async (req: Request, res: Response) => {
     }
 }
 
-//Delete photo
-
-export const destroy = async (req: Request, res: Response) => {
-}
