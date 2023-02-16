@@ -5,7 +5,7 @@
 import express from 'express'
 import { basic } from '../middlewares/auth/basic'
 import {body} from 'express-validator'
-import { index, show, store, addPhoto } from '../controllers/album_controller'
+import { index, show, store, update, addPhoto } from '../controllers/album_controller'
 const router = express.Router()
 
 
@@ -35,12 +35,9 @@ router.post('/:albumId/photos', addPhoto)
 /**
  * PATCH update album
  */
-//router.patch('/albums/:albumId', [], update)
+router.patch('/:albumId', update)
 
-/**
- * DELETE /resource/:resourceId
- */
-//router.delete('/album/:albumId', destroy)
+
 
 export default router
 

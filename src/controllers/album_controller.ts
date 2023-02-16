@@ -149,3 +149,34 @@ export const addPhoto = async (req: Request, res: Response) => {
 		res.status(500).send({ message: "Something went wrong" })
 	}
 }
+
+
+/**
+ * PATCH update album
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
+
+export const update = async (req: Request, res: Response) => {
+    const albumId = Number(req.params.albumId)
+
+    try {
+        const album = await prisma.album.update({
+            where: {
+                id: albumId
+            },
+            data: req.body
+        
+        })
+
+        return res.send(album)
+        
+    } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Nope, didn't work"
+        })
+    }
+}
