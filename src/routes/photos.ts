@@ -29,7 +29,7 @@ router.post('/', [
 /**
  * PATCH update photo
  */
-router.patch('/photos/:photoId', update)
+router.patch('/:photoId',  update)
 
 /**
  * DELETE /resource/:resourceId
