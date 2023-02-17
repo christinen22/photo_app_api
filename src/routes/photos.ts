@@ -24,12 +24,18 @@ router.get('/:photoId', show)
  */
 router.post('/', [
     body('title').isString().bail().isLength({ min: 3 }),
+    body('url').isURL(),
+    body('comment').isString().bail().isLength({ min: 3 })
 ], store)
 
 /**
  * PATCH update photo
  */
-router.patch('/:photoId',  update)
+router.patch('/:photoId', [
+    body('title').isString().bail().isLength({ min: 3 }),
+    body('url').isURL(),
+    body('comment').isString().bail().isLength({ min: 3 })
+], update)
 
 /**
  * DELETE /resource/:resourceId

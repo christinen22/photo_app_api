@@ -3,8 +3,8 @@
  */
 
 import express from 'express'
+import { body } from 'express-validator'
 import { basic } from '../middlewares/auth/basic'
-import {body} from 'express-validator'
 import { index, show, store, update, addPhoto } from '../controllers/album_controller'
 const router = express.Router()
 
@@ -23,7 +23,9 @@ router.get('/:albumId', basic, show)
 /**
  * POST /resource
  */
-router.post('/', basic, store)
+router.post('/', [
+    body('title').isString().bail().isLength({ min: 3 })
+], basic, store)
 
 /**
  * POST photo to album

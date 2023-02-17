@@ -12,7 +12,7 @@ export const createUserRules = [
 		const user = await getUserByEmail(value)
 
 		if(user) {
-			return Promise.reject("User with current email already exists")
+			return Promise.reject("A user with this email already exists")
 		}
 	}),
 	body('password').isString()
