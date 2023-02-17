@@ -42,7 +42,7 @@ export const register = async (req: Request, res: Response) => {
             })
 
             //Status success
-            res.status(201).send({ "status": "success", "data": user })
+            res.status(200).send({ "status": "success", "data": user })
 
         } catch (err) {
             return res.status(500).send({ "status": "error", message: "Could not create user"})
@@ -61,7 +61,7 @@ export const getUser = async (req: Request, res: Response) => {
 
     debug("who dis: %o", req.user)
 
-    res.send({
+    res.status(200).send({
         status: "success",
         data: {
             id: user?.id,
@@ -93,7 +93,7 @@ export const addAlbum = async (req: Request, res: Response) => {
 				photos: true,
 			}
 		})
-		res.status(201).send(result)
+		res.status(200).send(result)
 	} catch (err) {
 		
 		res.status(500).send({ message: "Something went wrong" })

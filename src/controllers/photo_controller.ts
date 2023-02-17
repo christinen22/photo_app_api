@@ -56,7 +56,7 @@ export const show = async (req: Request, res: Response) => {
                 message: "Not your photo"
             })
         } else if(Number(photo.user_id) === Number(req.user!.id)) {
-            res.send({
+            res.status(200).send({
                 status: "success",
                 data: photo
             })
@@ -96,7 +96,7 @@ export const store = async (req: Request, res: Response) => {
         })
        
 
-        res.send({
+        res.status(200).send({
             status: "success",
             data: photo
         })
@@ -129,7 +129,7 @@ export const update = async (req: Request, res: Response) => {
         
         })
 
-        return res.send(photo)
+        return res.status(200).send(photo)
         
     } catch (err) {
         return res.status(500).send({

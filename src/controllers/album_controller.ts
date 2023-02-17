@@ -4,13 +4,10 @@
 
 import Debug from 'debug'
 import { Request, Response } from 'express'
-import { matchedData, validationResult } from 'express-validator'
-import { basic } from '../middlewares/auth/basic'
+import { validationResult } from 'express-validator'
 import prisma from '../prisma'
 import { createAlbum, getAlbum, getAlbums } from '../services/album_services'
-import { getUserByEmail } from '../services/user_services'
-import { getUser } from './user_controller'
-import { addAlbum } from './user_controller'
+
 
 
 //Create a new debug instance
@@ -31,7 +28,7 @@ export const index = async (req: Request, res: Response) => {
         const album = await getAlbums(userId)
         
 
-        res.send({
+        res.status(200).send({
             status: "success",
             data: album,
         })
@@ -61,7 +58,7 @@ export const show = async (req: Request, res: Response) => {
                 message: "Not your album"
             })
         } else if(Number(album.user_id) === Number(req.user!.id)) {
-            res.send({
+            res.status(200).send({
                 status: "success",
                 data: album
             })
@@ -103,7 +100,7 @@ export const store = async (req: Request, res: Response) => {
         user_id: req.user!.id
         })
 
-        res.send({
+        res.status(200).send({
             
 
             status: "success",
@@ -143,10 +140,15 @@ export const addPhoto = async (req: Request, res: Response) => {
 				photos: true
 			}
 		})
-		res.status(201).send(result)
+		res.status(200).send({
+            status: "success",
+            data: result
+        })
 	} catch (err) {
 		debug("Error thrown when adding photo %o to an album %o: %o", req.body.photo_id, req.body.album_id)
-		res.status(500).send({ message: "Something went wrong" })
+		res.status(500).send({ 
+            message: "Something went wrong" 
+        })
 	}
 }
 
@@ -171,7 +173,7 @@ export const update = async (req: Request, res: Response) => {
         
         })
 
-        return res.send(album)
+        return res.status(200).send(album)
         
     } catch (err) {
         return res.status(500).send({
