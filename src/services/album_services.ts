@@ -33,7 +33,6 @@ export const getAlbum = async (albumId: number) => {
     
     return await prisma.album.findUniqueOrThrow({
 
-
         where: {
             id: albumId
        

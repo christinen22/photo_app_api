@@ -32,9 +32,13 @@ export const index = async (req: Request, res: Response) => {
             status: "success",
             data: album,
         })
+
     } catch (err) {
         debug("Error thrown when finding albums: %o, user: %o:" )
-        res.status(500).send({status: "error", message: "Something went wrong"})
+        res.status(500).send({
+            status: "error", 
+            message: "Something went wrong"
+        })
     }
 }
 
@@ -67,6 +71,7 @@ export const show = async (req: Request, res: Response) => {
     } catch (err) {
         debug("Error thrown finding albumId %o", albumId)
         res.status(404).send({
+            status: "error",
             message: "Not found",
         })
     }
@@ -101,7 +106,6 @@ export const store = async (req: Request, res: Response) => {
         })
 
         res.status(200).send({
-            
 
             status: "success",
             data: album
@@ -109,7 +113,6 @@ export const store = async (req: Request, res: Response) => {
         })
 
     } catch (err) {
-        debug("Error when posting album, title is: %o, user_id is %o", req.body.title, req.user!.id)
         res.status(500).send({
             status: "error",
             message: "Something went wrong"
@@ -121,7 +124,6 @@ export const store = async (req: Request, res: Response) => {
  * Link a photo to an users album
  */
 export const addPhoto = async (req: Request, res: Response) => {
- 
 
 	try {
 
@@ -145,8 +147,8 @@ export const addPhoto = async (req: Request, res: Response) => {
             data: result
         })
 	} catch (err) {
-		debug("Error thrown when adding photo %o to an album %o: %o", req.body.photo_id, req.body.album_id)
 		res.status(500).send({ 
+            status: "error",
             message: "Something went wrong" 
         })
 	}

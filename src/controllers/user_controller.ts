@@ -41,11 +41,16 @@ export const register = async (req: Request, res: Response) => {
                 password: hashedPassword
             })
 
-            //Status success
-            res.status(200).send({ "status": "success", "data": user })
+            res.status(200).send({ 
+                "status": "success", 
+                "data": user 
+            })
 
         } catch (err) {
-            return res.status(500).send({ "status": "error", message: "Could not create user"})
+            return res.status(500).send({ 
+                "status": "error", 
+                message: "Could not create user"
+            })
         }
 
 
@@ -58,8 +63,6 @@ export const register = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
 
     const user = await getUserByEmail (req.user!.email)
-
-    debug("who dis: %o", req.user)
 
     res.status(200).send({
         status: "success",

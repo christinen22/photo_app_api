@@ -37,9 +37,6 @@ router.patch('/:photoId', [
     body('comment').isString().bail().isLength({ min: 3 })
 ], update)
 
-/**
- * DELETE /resource/:resourceId
- */
-//router.delete('/photos:photoId', destroy)
+
 
 export default router

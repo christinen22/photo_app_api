@@ -1,12 +1,8 @@
 /**
  * Photo services
  */
-
-
-
 import prisma from "../prisma";
 import { CreatePhotoData } from "../types";
-
 
 
 
@@ -34,7 +30,6 @@ export const getPhoto = async (photoId: number) => {
     
     return await prisma.photo.findUniqueOrThrow({
 
-
         where: {
             id: photoId
        
@@ -49,9 +44,6 @@ export const getPhoto = async (photoId: number) => {
         }
     })
 }
-
-
-
 
 
 
