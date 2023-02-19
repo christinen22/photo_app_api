@@ -24,7 +24,7 @@ router.get('/:albumId', show)
  * POST /resource
  */
 router.post('/', [
-    body('title').isString().bail().isLength({ min: 3 })
+    body('title').isString().trim().bail().isLength({ min: 3 })
 ], store)
 
 /**

@@ -6,8 +6,8 @@ import { body } from 'express-validator'
 import { getUserByEmail } from '../services/user_services'
 
 export const createUserRules = [
-    body('first_name').isString().bail().isLength({ min: 2}),
-	body('last_name').isString().bail().isLength({ min: 2}),
+    body('first_name').isString().bail().trim().isLength({ min: 2}),
+	body('last_name').isString().bail().trim().isLength({ min: 2}),
 	body('email').isEmail().custom(async value => {
 		const user = await getUserByEmail(value)
 
@@ -15,6 +15,6 @@ export const createUserRules = [
 			return Promise.reject("A user with this email already exists")
 		}
 	}),
-	body('password').isString().isLength({ min: 6 })
+	body('password').isString().trim().isLength({ min: 6 })
 
 ]

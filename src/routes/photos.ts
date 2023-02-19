@@ -23,18 +23,18 @@ router.get('/:photoId', show)
  * POST /resource
  */
 router.post('/', [
-    body('title').isString().bail().isLength({ min: 3 }),
+    body('title').isString().bail().trim().isLength({ min: 3 }),
     body('url').isURL(),
-    body('comment').optional().isString().bail().isLength({ min: 3 })
+    body('comment').optional().isString().bail().trim().isLength({ min: 3 })
 ], store)
 
 /**
  * PATCH update photo
  */
 router.patch('/:photoId', [
-    body('title').isString().bail().isLength({ min: 3 }),
+    body('title').isString().bail().trim().isLength({ min: 3 }),
     body('url').isURL(),
-    body('comment').isString().bail().isLength({ min: 3 })
+    body('comment').isString().trim().bail().isLength({ min: 3 })
 ], update)
 
 
