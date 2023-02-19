@@ -7,6 +7,7 @@ import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import prisma from '../prisma'
 import { createAlbum, getAlbum, getAlbums } from '../services/album_services'
+import { getPhoto } from '../services/photo_services'
 
 
 
@@ -124,6 +125,29 @@ export const store = async (req: Request, res: Response) => {
  * Link a photo to an users album
  */
 export const addPhoto = async (req: Request, res: Response) => {
+    const photo_id = Number(req.body.photo_id)
+    const albumId = Number(req.params.albumId)
+
+    const photo = await getPhoto(photo_id)
+    const album = await getAlbum(albumId)
+    
+
+
+    if(Number(req.user!.id) !== album.user_id) {
+        debug("Photos userid: %o, album userId: %o", photo.user_id, album.user_id)
+        return res.status(400).send({
+            status: "error",
+            message: "Not your album"
+        })
+    }
+
+    if(Number(req.user!.id) !== photo.user_id) {
+        return res.status(400).send({
+            status: "error",
+            message: "Not your photo"
+        })
+    }
+
 
 	try {
 
@@ -142,12 +166,12 @@ export const addPhoto = async (req: Request, res: Response) => {
 				photos: true
 			}
 		})
-		res.status(200).send({
+		return res.status(200).send({
             status: "success",
             data: result
         })
 	} catch (err) {
-		res.status(500).send({ 
+		return res.status(500).send({ 
             status: "error",
             message: "Something went wrong" 
         })
