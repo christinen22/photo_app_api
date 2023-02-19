@@ -18,7 +18,7 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
         })
     }
 
-    //debug("Authorization header: %o:", req.headers.authorization)
+
     const [authSchema, base64Payload] = req.headers.authorization.split(' ')
 
     //Check that its Basic
@@ -38,7 +38,6 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
     //Get user from db
     const user = await getUserByEmail(email)
     if (!user) {
-        debug("User %o does not exist", email)
 
         return res.status(401).send({
             status: "fail",
@@ -58,7 +57,6 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
 
     //Attach user to request
     req.user = user
-    //debug("User is %o", user)
 
 
     next()

@@ -13,19 +13,19 @@ const router = express.Router()
 /**
  * GET all albums
  */
-router.get('/', basic, index)
+router.get('/', index)
 
 /**
  * GET single album incl photos
  */
-router.get('/:albumId', basic, show)
+router.get('/:albumId', show)
 
 /**
  * POST /resource
  */
 router.post('/', [
     body('title').isString().bail().isLength({ min: 3 })
-], basic, store)
+], store)
 
 /**
  * POST photo to album

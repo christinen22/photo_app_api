@@ -76,30 +76,4 @@ export const getUser = async (req: Request, res: Response) => {
 }
 
 
-/**
- * Link a album to a user
- */
-export const addAlbum = async (req: Request, res: Response) => {
-	try {
-		const result = await prisma.user.update({
-			where: {
-				id: Number(req.params.userId),
-			},
-			data: {
-				album: {
-					connect: {
-						id: req.body.albumId,
-					}
-				}
-			},
-			include: {
-				photos: true,
-			}
-		})
-		res.status(200).send(result)
-	} catch (err) {
-		
-		res.status(500).send({ message: "Something went wrong" })
-	}
-}
 

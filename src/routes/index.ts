@@ -28,13 +28,11 @@ router.use('/user', basic, user)
 //Create user
 router.post('/register', createUserRules, register)
 
-router.post('/albums/:albumId/photos', basic, addPhoto)
-
 router.use('/albums', basic, albums)
 
 router.use('/photos', basic, photos)
 
-router.use('/user', basic, user)
+
 
 
 

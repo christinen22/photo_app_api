@@ -14,13 +14,13 @@ model User {
   first_name  String
   last_name   String
   photos      Photo[]
-  album       Album[]    
+  albums      Album[]    
   
 }
 
 
 model Album {
-  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  id          Int        @id @default(autoincrement()) @db.UnsignedInt
   title       String
   photos      Photo[]
   user_id     Int        @db.UnsignedInt
@@ -34,9 +34,9 @@ model Photo {
   title       String
   url         String
   comment     String
-  album       Album[]
+  albums      Album[]
   user        User       @relation(fields: [user_id], references: [id])
-  user_id     Int         @db.UnsignedInt
+  user_id     Int        @db.UnsignedInt
 
 
 }
