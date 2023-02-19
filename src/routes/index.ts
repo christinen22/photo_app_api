@@ -2,13 +2,10 @@ import express from "express"
 import albums from './albums'
 import photos from './photos'
 import user from './users'
-import { body } from 'express-validator'
-import resource from './_router'
 import { register } from '../controllers/user_controller'
 import { basic } from "../middlewares/auth/basic"
 import { createUserRules } from "../validations/user_rules"
-import { createAlbum } from "../services/album_services"
-import { addPhoto } from "../controllers/album_controller"
+
 // instantiate a new router
 const router = express.Router()
 

@@ -27,8 +27,7 @@ export const register = async (req: Request, res: Response) => {
     
 
     //Calculate hash + salt
-    const hashedPassword = 
-        await bcrypt.hash(validatedData.password, Number(process.env.SALT_ROUNDS) || 10)
+    const hashedPassword = await bcrypt.hash(validatedData.password, Number(process.env.SALT_ROUNDS) || 10)
 
         validatedData.password = hashedPassword
 
@@ -52,8 +51,6 @@ export const register = async (req: Request, res: Response) => {
                 message: "Could not create user"
             })
         }
-
-
 }
 
 /**

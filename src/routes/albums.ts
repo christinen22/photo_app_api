@@ -38,7 +38,7 @@ router.post('/:albumId/photos', addPhoto)
  * PATCH update album
  */
 router.patch('/:albumId', [
-    body('title').isString().bail().isLength({ min: 3 })
+    body('title').isString().bail().trim().isLength({ min: 3 })
 ], basic, update)
 
 

@@ -18,7 +18,7 @@ export const basic = async (req: Request, res: Response, next: NextFunction) => 
         })
     }
 
-
+    
     const [authSchema, base64Payload] = req.headers.authorization.split(' ')
 
     //Check that its Basic

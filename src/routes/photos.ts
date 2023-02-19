@@ -24,7 +24,7 @@ router.get('/:photoId', show)
  */
 router.post('/', [
     body('title').isString().bail().trim().isLength({ min: 3 }),
-    body('url').isURL(),
+    body('url').isURL().trim(),
     body('comment').optional().isString().bail().trim().isLength({ min: 3 })
 ], store)
 
@@ -33,7 +33,7 @@ router.post('/', [
  */
 router.patch('/:photoId', [
     body('title').isString().bail().trim().isLength({ min: 3 }),
-    body('url').isURL(),
+    body('url').isURL().trim(),
     body('comment').isString().trim().bail().isLength({ min: 3 })
 ], update)
 
