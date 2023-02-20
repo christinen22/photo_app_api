@@ -116,7 +116,6 @@ export const store = async (req: Request, res: Response) => {
  * @returns 
  */
 
-
 export const update = async (req: Request, res: Response) => {
     const photoId = Number(req.params.photoId)
 
