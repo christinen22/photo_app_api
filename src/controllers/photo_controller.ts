@@ -125,7 +125,6 @@ export const update = async (req: Request, res: Response) => {
                 id: photoId
             },
             data: req.body
-        
         })
 
         return res.status(200).send(photo)
