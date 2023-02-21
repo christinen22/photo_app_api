@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `album` ADD COLUMN `photo_id` INTEGER UNSIGNED NULL;
